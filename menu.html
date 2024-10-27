@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منوی رستوران</title>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v26.0.2/dist/font-face.css');
+        body {
+            background-color: #2c2c2c;
+            color: white;
+            font-family: 'Vazir', Arial, sans-serif;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .header {
+            background-color: #1e90ff;
+            padding: 7px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px;
+            animation: slideDown 1s ease-in-out;
+        }
+        .header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .menu-section {
+            margin: 20px;
+            padding: 20px;
+            border: 2px solid #1e90ff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(30, 144, 255, 0.5);
+            animation: slideIn 1s ease-in-out;
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            position: relative;
+            animation: fadeInUp 1s ease-in-out;
+        }
+        .menu-item img {
+            width: 100px;
+            height: 100px;
+            margin-right: 20px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(30, 144, 255, 0.5);
+        }
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+        .add-to-order, .remove-from-order {
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .quantity-display {
+            margin: 0 10px;
+        }
+        .add-to-order:hover, .remove-from-order:hover {
+            transform: scale(1.2);
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            bottom: 60px;
+            right: 130px;
+            background-color: #008cffab;
+            color: #2c2c2c;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(30, 144, 255, 0.5);
+            transition: opacity 0.5s ease, bottom 0.5s ease;
+        }
+        .popup.active {
+            display: block;
+            opacity: 1;
+            bottom: 40px;
+        }
+        .popup.inactive {
+            opacity: 0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-20px); }
+            to { transform: translateY(0); }
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-20px); }
+            to { transform: translateX(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="path_to_logo" alt="لوگوی رستوران">
+        <h1>نام رستوران</h1>
+    </div>
+    <div class="menu-section">
+        <h2>بخش سنتی</h2>
+        <div class="menu-item">
+            <img src="path_to_image" alt="خورشت قورمه سبزی">
+            <div>
+                <h3>خورشت قورمه سبزی</h3>
+                <p>توضیحات کوتاه</p>
+            </div>
+            <div class="quantity-controls">
+                <button class="remove-from-order" onclick="changeQuantity('خورشت قورمه سبزی', -0)">-</button>
+                <span class="quantity-display" id="quantity-خورشت قورمه سبزی">0</span>
+                <button class="add-to-order" onclick="changeQuantity('خورشت قورمه سبزی', 0)">+</button>
+            </div>
+        </div>
+        <!-- other traditional dishes -->
+    </div>
+    <div class="menu-section">
+        <h2>بخش فستفود</h2>
+        <div class="menu-item">
+            <img src="path_to_image" alt="همبرگر">
+            <div>
+                <h3>همبرگر</h3>
+                <p>توضیحات کوتاه</p>
+            </div>
+            <div class="quantity-controls">
+                <button class="remove-from-order" onclick="changeQuantity('همبرگر', -0)">-</button>
+                <span class="quantity-display" id="quantity-همبرگر">0</span>
+                <button class="add-to-order" onclick="changeQuantity('همبرگر', 0)">+</button>
+            </div>
+        </div>
+        <!-- other fast food items -->
+    </div>
+    <div class="menu-section">
+        <h2>بخش کباب</h2>
+        <div class="menu-item">
+            <img src="path_to_image" alt="کباب کوبیده">
+            <div>
+                <h3>کباب کوبیده</h3>
+                <p>توضیحات کوتاه</p>
+            </div>
+            <div class="quantity-controls">
+                <button class="remove-from-order" onclick="changeQuantity('کباب کوبیده', -0)">-</button>
+                <span class="quantity-display" id="quantity-کباب کوبیده">0</span>
+                <button class="add-to-order" onclick="changeQuantity('کباب کوبیده', 0)">+</button>
+            </div>
+        </div>
+        <!-- other kebab items -->
+    </div>
+    <div class="menu-section">
+        <h2>بخش کافه</h2>
+        <div class="menu-item">
+            <img src="path_to_image" alt="لاته">
+            <div>
+                <h3>لاته</h3>
+                <p>توضیحات کوتاه</p>
+            </div>
+            <div class="quantity-controls">
+                <button class="remove-from-order" onclick="changeQuantity('لاته', -0)">-</button>
+                <span class="quantity-display" id="quantity-لاته">0</span>
+                <button class="add-to-order" onclick="changeQuantity('لاته', 0)">+</button>
+            </div>
+        </div>
+        <!-- other cafe items -->
+    </div>
+    <div class="popup" id="my-orders">
+        <h2>سفارشهای من</h2>
+        <ul id="order-list"></ul>
+        <div id="total-price"></div>
+    </div>
+    <button onclick="togglePopup()" style="position: fixed; bottom: 20px; right: 20px; background-color: #1e90ff; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer;">سفارشهای من</button>
+    <script src="script.js"></script>
+</body>
+</html>
+
+    <script>
+// Define constants for UI elements
+const orderButtons = document.querySelectorAll('.add-to-order');
+const removeButtons = document.querySelectorAll('.remove-from-order');
+const orderList = document.getElementById('order-list');
+const popup = document.getElementById('my-orders');
+const totalPrice = document.getElementById('total-price');
+
+// Initialize orders and prices
+const orders = {};
+const prices = {
+    "خورشت قورمه سبزی": 20000,
+    "همبرگر": 15000,
+    "کباب کوبیده": 25000,
+    "لاته": 10000
+};
+
+// Function to handle adding items to the order
+function handleAddOrder(event) {
+    const item = event.target.closest('.menu-item');
+    const itemName = item.querySelector('h3').innerText;
+    const quantityDisplay = document.getElementById(`quantity-${itemName}`);
+    
+    if (orders[itemName]) {
+        orders[itemName]++;
+    } else {
+        orders[itemName] = 1;
+    }
+    
+    quantityDisplay.textContent = orders[itemName];
+    updateOrderList();
+}
+
+// Function to handle removing items from the order
+function handleRemoveOrder(event) {
+    const item = event.target.closest('.menu-item');
+    const itemName = item.querySelector('h3').innerText;
+    const quantityDisplay = document.getElementById(`quantity-${itemName}`);
+    
+    if (orders[itemName]) {
+        orders[itemName]--;
+        if (orders[itemName] <= 0) {
+            delete orders[itemName];
+            quantityDisplay.textContent = 0;
+        } else {
+            quantityDisplay.textContent = orders[itemName];
+        }
+    }
+    
+    updateOrderList();
+}
+
+// Add event listeners to buttons
+orderButtons.forEach(button => button.addEventListener('click', handleAddOrder));
+removeButtons.forEach(button => button.addEventListener('click', handleRemoveOrder));
+
+// Function to update the order list and total price
+function updateOrderList() {
+    orderList.innerHTML = '';
+    let total = 0;
+    
+    for (const [itemName, quantity] of Object.entries(orders)) {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+            ${itemName} x${quantity} - ${prices[itemName] * quantity} تومان
+            <button class="remove-from-order" onclick="changeQuantity('${itemName}', -1)">-</button>
+            <button class="add-to-order" onclick="changeQuantity('${itemName}', 1)">+</button>
+        `;
+        orderList.appendChild(listItem);
+        total += prices[itemName] * quantity;
+    }
+    totalPrice.textContent = `مجموع کل: ${total} تومان`;
+}
+
+// Function to change item quantity directly from the order list
+function changeQuantity(itemName, change) {
+    if (orders[itemName]) {
+        orders[itemName] += change;
+        if (orders[itemName] <= 0) {
+            delete orders[itemName];
+        }
+    } else if (change > 0) {
+        orders[itemName] = 1;
+    }
+    
+    const quantityDisplay = document.getElementById(`quantity-${itemName}`);
+    if (quantityDisplay) {
+        quantityDisplay.textContent = orders[itemName] || 0;
+    }
+    
+    updateOrderList();
+}
+
+// Toggle the popup visibility
+function togglePopup() {
+    if (popup.classList.contains('active')) {
+        popup.classList.add('inactive');
+        setTimeout(() => {
+            popup.classList.remove('active');
+            popup.classList.remove('inactive');
+        }, 500);
+    } else {
+        popup.classList.add('active');
+    }
+}
+
+
+    </script>
